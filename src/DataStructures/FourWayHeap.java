@@ -32,7 +32,7 @@ public class FourWayHeap {
 
 	public heap_element get_min(){
 		heap_element mi = arr.get(3);
-		arr.add(3, arr.get(arr.size()-1));
+		arr.set(3, arr.get(arr.size()-1));
 		arr.remove(arr.size()-1);
 		int idx = 3;
 		int minChild = 4*(idx - 2);

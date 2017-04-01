@@ -38,10 +38,10 @@ public class BuildHuffmanTree {
 		}
 		
 		while (heap.size() > 1){
-			System.out.println(heap.size());
+			//System.out.println(heap.size());
 			elemOne = heap.get_min();
 			elemTwo = heap.get_min();
-			//cout<<elemOne.freq<<" "<<elemTwo.freq<<endl;
+			System.out.println(elemOne.freq+" "+elemTwo.freq);
 			elemOne.tree.combine(elemTwo.tree);
 			elemOne.freq += elemTwo.freq;
 			heap.insert(elemOne);
@@ -73,7 +73,7 @@ public class BuildHuffmanTree {
 		while (heap.size() > 4){
 			elemOne = heap.get_min();
 			elemTwo = heap.get_min();
-			//cout<<elemOne.freq<<" "<<elemTwo.freq<<endl;
+			System.out.println(elemOne.freq+" "+elemTwo.freq);
 			elemOne.tree.combine(elemTwo.tree);
 			elemOne.freq += elemTwo.freq;
 			heap.insert(elemOne);
@@ -106,12 +106,11 @@ public class BuildHuffmanTree {
 			heap.insert(tmp);
 		}
 
-		//cout<<"Initialized tree"<<endl;
+		
 		while (heap.size() > 1){
-			//cout<<heap.size()<<endl;
 			elemOne = heap.get_min();
 			elemTwo = heap.get_min();
-			//cout<<elemOne.freq<<" "<<elemTwo.freq<<endl;
+			System.out.println(elemOne.freq+" "+elemTwo.freq);
 			elemOne.tree.combine(elemTwo.tree);
 			elemOne.freq += elemTwo.freq;
 			tmp = ph.new pairing_heap_node();
@@ -154,7 +153,7 @@ public class BuildHuffmanTree {
 		//BinaryHeap
 				long startTime = System.currentTimeMillis();
 				for(int i = 0; i < 10; i++){
-					System.out.println("bh");
+					//System.out.println("bh");
 					build_tree_using_binary_heap();
 					
 				}
@@ -167,6 +166,7 @@ public class BuildHuffmanTree {
 				startTime = System.currentTimeMillis();
 				for(int i = 0; i < 10; i++){
 					//run 10 times on given data set
+					//System.out.println("4h");
 					build_tree_using_4way_heap();
 				}
 				stopTime = System.currentTimeMillis();
@@ -177,6 +177,7 @@ public class BuildHuffmanTree {
 				startTime = System.currentTimeMillis();
 				for(int i = 0; i < 10; i++){
 					//run 10 times on given data set
+					//System.out.println("ph");
 					build_tree_using_pairing_heap();
 				}
 				stopTime = System.currentTimeMillis();
