@@ -2,18 +2,15 @@ package DataStructures;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import DataStructures.HuffmanTree.huffman_tree;
+import DataStructures.heap_element;
+import DataStructures.huffman_tree;
 
-public class BinaryHeap {
-		public class heap_element{
-			public int freq;
-			public huffman_tree tree;
-		};
 
 
 		public class binary_heap{
 			public ArrayList< heap_element > arr = new ArrayList< heap_element >();
 			public void insert(heap_element newElem){
+				//System.out.println("inserting"+newElem.freq);
 				arr.add(newElem);
 				int idx = arr.size() - 1;
 				while(idx != 0){
@@ -25,6 +22,7 @@ public class BinaryHeap {
 						break;
 					}
 				}
+				//System.out.println("min elem : "+arr.get(0).freq);
 			}
 
 			public heap_element get_min(){
@@ -42,8 +40,9 @@ public class BinaryHeap {
 						idx = minChild;
 						minChild = 2*idx + 1;
 					}
-					else
+					else{
 						break;
+					}
 				}
 				return mi;
 			}
@@ -52,4 +51,3 @@ public class BinaryHeap {
 				return arr.size();
 			}
 		}
-}

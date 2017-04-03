@@ -2,15 +2,15 @@ package DataStructures;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import DataStructures.BinaryHeap.heap_element;
-import DataStructures.HuffmanTree.huffman_tree;
+import DataStructures.heap_element;
+import DataStructures.huffman_tree;
 
 public class FourWayHeap {
 	public ArrayList< heap_element > arr = new ArrayList< heap_element >();
 	
 
 	public FourWayHeap(){
-		heap_element tmp = new BinaryHeap().new heap_element();
+		heap_element tmp = new heap_element();
 		for(int i=0;i<3;i++)
 			arr.add(tmp);
 	}

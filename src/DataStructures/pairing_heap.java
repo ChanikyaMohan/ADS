@@ -2,13 +2,9 @@ package DataStructures;
 
 import java.util.ArrayList;
 
-import DataStructures.BinaryHeap.heap_element;
+import DataStructures.heap_element;
+import DataStructures.pairing_heap_node;
 
-public class PairingHeap {
-		public class pairing_heap_node{
-			public ArrayList< pairing_heap_node > arr = new ArrayList< pairing_heap_node >();
-			public heap_element elem;
-		};
 
 
 		public class pairing_heap{
@@ -75,4 +71,4 @@ public class PairingHeap {
 				return sz;
 			}
 		}
-}
+

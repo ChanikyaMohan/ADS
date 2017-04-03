@@ -1,23 +1,6 @@
 package DataStructures;
 
-public class HuffmanTree {
-	public class huffman_tree_node{
-			public huffman_tree_node left;
-			public huffman_tree_node right;
-			public int val;
-			public huffman_tree_node(){
-				left = null;
-				right = null;
-				val = -1;
-			}
-
-			public huffman_tree_node(int v){
-				left = null;
-				right = null;
-				val = v;
-			}
-		}
-
+import DataStructures.huffman_tree_node;
 
 		public class huffman_tree{
 			public huffman_tree_node root;
@@ -50,4 +33,3 @@ public class HuffmanTree {
 			}
 		}
 
-}

@@ -2,16 +2,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-import DataStructures.BinaryHeap;
-import DataStructures.BinaryHeap.binary_heap;
-import DataStructures.BinaryHeap.heap_element;
+
+import DataStructures.binary_heap;
+import DataStructures.heap_element;
 import DataStructures.FourWayHeap;
-import DataStructures.HuffmanTree;
-import DataStructures.HuffmanTree.huffman_tree;
-import DataStructures.HuffmanTree.huffman_tree_node;
-import DataStructures.PairingHeap;
-import DataStructures.PairingHeap.pairing_heap;
-import DataStructures.PairingHeap.pairing_heap_node;
+import DataStructures.huffman_tree;
+import DataStructures.huffman_tree_node;
+import DataStructures.pairing_heap;
+import DataStructures.pairing_heap_node;
 
 public class BuildHuffmanTree {
 	public static final int FREQ_TABLE_SIZE  = 1000000;
@@ -19,21 +17,22 @@ public class BuildHuffmanTree {
 	public static final String[] code_table = new String[1000000];
 	
 	static void build_tree_using_binary_heap(){
-		BinaryHeap bh = new BinaryHeap();
-		binary_heap heap = bh.new binary_heap();
-		heap_element elemOne = bh.new heap_element();
-		heap_element elemTwo = bh.new heap_element();
+		binary_heap heap = new binary_heap();
+		heap_element elemOne = new heap_element();
+		heap_element elemTwo = new heap_element();
 		
-		HuffmanTree ht = new HuffmanTree();
+		huffman_tree ht = new huffman_tree();
 		
 		for (int i=0;i<FREQ_TABLE_SIZE; i++){
 
 			if (freq_table[i] == 0)
 				continue;
+			elemOne = new heap_element();
 
 			elemOne.freq = freq_table[i];
-			elemOne.tree = ht.new huffman_tree();
-			elemOne.tree.insert_root(ht.new huffman_tree_node(i));
+			//System.out.println(freq_table[i]);
+			elemOne.tree = new huffman_tree();
+			elemOne.tree.insert_root(new huffman_tree_node(i));
 			heap.insert(elemOne);
 		}
 		
@@ -41,7 +40,7 @@ public class BuildHuffmanTree {
 			//System.out.println(heap.size());
 			elemOne = heap.get_min();
 			elemTwo = heap.get_min();
-			System.out.println(elemOne.freq+" "+elemTwo.freq);
+			//System.out.println(elemOne.freq+" "+elemTwo.freq);
 			elemOne.tree.combine(elemTwo.tree);
 			elemOne.freq += elemTwo.freq;
 			heap.insert(elemOne);
@@ -51,29 +50,29 @@ public class BuildHuffmanTree {
 
 	static void build_tree_using_4way_heap(){
 		FourWayHeap heap = new FourWayHeap();
+
+		huffman_tree ht = new huffman_tree();
 		
-		BinaryHeap bheap = new BinaryHeap();
-		HuffmanTree ht = new HuffmanTree();
-		
-		heap_element elemOne = bheap.new heap_element();
-		heap_element elemTwo = bheap.new heap_element();
+		heap_element elemOne = new heap_element();
+		heap_element elemTwo = new heap_element();
 
 		
 		for (int i=0;i<FREQ_TABLE_SIZE; i++){
 
 			if (freq_table[i] == 0)
 				continue;
-
+			
+			elemOne = new heap_element();
 			elemOne.freq = freq_table[i];
-			elemOne.tree = ht.new huffman_tree();
-			elemOne.tree.insert_root(ht.new huffman_tree_node(i));
+			elemOne.tree = new huffman_tree();
+			elemOne.tree.insert_root(new huffman_tree_node(i));
 			heap.insert(elemOne);
 		}
 
 		while (heap.size() > 4){
 			elemOne = heap.get_min();
 			elemTwo = heap.get_min();
-			System.out.println(elemOne.freq+" "+elemTwo.freq);
+			//System.out.println(elemOne.freq+" "+elemTwo.freq);
 			elemOne.tree.combine(elemTwo.tree);
 			elemOne.freq += elemTwo.freq;
 			heap.insert(elemOne);
@@ -82,26 +81,25 @@ public class BuildHuffmanTree {
 
 
 	static void build_tree_using_pairing_heap(){
-		PairingHeap ph = new PairingHeap();
-		pairing_heap heap = ph.new pairing_heap();
+		pairing_heap heap = new pairing_heap();
 		
-		BinaryHeap bheap = new BinaryHeap();
+		heap_element elemOne = new heap_element();
+		heap_element elemTwo = new heap_element();
 		
-		heap_element elemOne = bheap.new heap_element();
-		heap_element elemTwo = bheap.new heap_element();
+		huffman_tree ht = new huffman_tree();
 		
-		HuffmanTree ht = new HuffmanTree();
-		pairing_heap_node tmp = ph.new pairing_heap_node();
+		pairing_heap_node tmp = new pairing_heap_node();
 
 		for (int i=0;i<FREQ_TABLE_SIZE; i++){
 
 			if (freq_table[i] == 0)
 				continue;
-
+			
+			elemOne = new heap_element();
 			elemOne.freq = freq_table[i];
-			elemOne.tree = ht.new huffman_tree();
-			elemOne.tree.insert_root(ht.new huffman_tree_node(i));
-			tmp = ph.new pairing_heap_node();
+			elemOne.tree = new huffman_tree();
+			elemOne.tree.insert_root(new huffman_tree_node(i));
+			tmp = new pairing_heap_node();
 			tmp.elem = elemOne;
 			heap.insert(tmp);
 		}
@@ -110,10 +108,10 @@ public class BuildHuffmanTree {
 		while (heap.size() > 1){
 			elemOne = heap.get_min();
 			elemTwo = heap.get_min();
-			System.out.println(elemOne.freq+" "+elemTwo.freq);
+			//System.out.println(elemOne.freq+" "+elemTwo.freq);
 			elemOne.tree.combine(elemTwo.tree);
 			elemOne.freq += elemTwo.freq;
-			tmp = ph.new pairing_heap_node();
+			tmp = new pairing_heap_node();
 			tmp.elem = elemOne;
 			heap.insert(tmp);
 		}
@@ -129,26 +127,24 @@ public class BuildHuffmanTree {
 		}
 	}
 
-
+	
 	public static void main(String args[]) throws NumberFormatException, IOException {
-	    System.out.println("in main");
+	    //System.out.println("in main");
 	    FileReader fr=null;
 
-		String path = "D:\\sample_input_small.txt";
+		String path = "D:\\sample_input_large.txt";
 			
 		fr=new FileReader(path);
 		
 		BufferedReader br=new BufferedReader(fr);
 		String S=new String();
-		 int j = 0;
 		while((S=br.readLine())!=null){
 			 int s = Integer.parseInt(S);
-			 freq_table[j]=s;
-		     j++;
+			 freq_table[s]++;
 		}
 		br.close();
-		
-		System.out.println("read file");
+		//display_freq_table(10);
+		//System.out.println("read file");
 		
 		//BinaryHeap
 				long startTime = System.currentTimeMillis();
@@ -171,7 +167,7 @@ public class BuildHuffmanTree {
 				}
 				stopTime = System.currentTimeMillis();
 				elapsedTime = stopTime - startTime;
-				System.out.println("Time with 4way heap ms: "+elapsedTime+" avg time :"+elapsedTime/10 );
+				System.out.println("Time with 4way heap ms: "+elapsedTime+" avg time :"+(double)elapsedTime/10 );
 				
 				// pairing heap
 				startTime = System.currentTimeMillis();
@@ -182,7 +178,7 @@ public class BuildHuffmanTree {
 				}
 				stopTime = System.currentTimeMillis();
 				elapsedTime = stopTime - startTime;
-				System.out.println("Time with pairing heap ms: "+elapsedTime+" avg time :"+elapsedTime/10 );
+				System.out.println("Time with pairing heap ms: "+elapsedTime+" avg time :"+ (double)elapsedTime/10 );
 
 			}
 		}
