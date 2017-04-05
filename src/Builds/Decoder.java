@@ -2,7 +2,7 @@ package Builds;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,39 +14,53 @@ public class decoder {
 	public static final String[] code_table = new String[1000000];
 	
 	static void decodeText(huffman_tree tree, String filename) throws IOException{
-		BufferedReader input = new BufferedReader(new FileReader(filename));
-		BufferedWriter out = new BufferedWriter(new FileWriter("decoded.txt"));
+		FileInputStream input = new FileInputStream(filename);
+		FileWriter br = new FileWriter("decoded.txt");
+		BufferedWriter out = new  BufferedWriter(br);
+		
+		byte[] codeByte = new byte[input.available()];
+		input.read(codeByte);
+		
 		
 	    StringBuilder buffer = new StringBuilder();
 	    
-	    String S=new String();
-	    while((S=input.readLine())!=null){
-	    	buffer.append(S);
+	    for(int i=0;i<codeByte.length;i++){
+	    	byte indByte = codeByte[i];
+	    	//System.out.print((int)indByte);
+	    	buffer.append(String.format("%8s", Integer.toBinaryString(indByte & 0XFF )).replace(' ', '0'));
+	    	
 	    }
 	    
-		input.close();
-		
-	    String data = new String();
-	    data = buffer.toString();
-	    //System.out.println(out);
-	    //System.out.println(data);
+	   
 		huffman_tree_node node = tree.getRoot();
-
-		for (int i=0;i<data.length(); i++) {
-			int k = (int)data.charAt(i);
-			for(int p=0;p<8;p++){
-				if ((k&(1<<p)) > 0)
-					node = node.right;
-				else
-					node = node.left;
-				if (node.left == null && node.right == null){
-					//System.out.println(node.val);
-					out.write(Integer.toString(node.val));
-					out.write("\n");
-					node = tree.getRoot();
+		
+		
+		System.out.println("decoding...");
+		huffman_tree_node tempRoot = node;
+		for(int i =0;i< buffer.length();i++)
+		{
+			if(buffer.charAt(i) == '0')
+			{
+				tempRoot = tempRoot.left;
+				if(tempRoot.left == null && tempRoot.right == null)
+				{
+					out.write(Integer.toString(tempRoot.val)+ "\n");
+					//System.out.println("left:" + tempRoot.data);
+					tempRoot = node;
+				}
+			}
+			else
+			{
+				tempRoot = tempRoot.right;
+				if(tempRoot.right == null && tempRoot.left == null)
+				{
+				out.write(Integer.toString(tempRoot.val)+ "\n");
+				//System.out.println("right:"+tempRoot.data);
+				tempRoot = node;
 				}
 			}
 		}
+		input.close();
 		out.close();
 		System.out.println("decoded.txt done");
 	}
@@ -60,6 +74,7 @@ public class decoder {
 		FileReader fr=null;
 		fr=new FileReader(args[1]);
 		
+		long startTime = System.currentTimeMillis();
 		BufferedReader br=new BufferedReader(fr);
 		String S=new String();
 		while((S=br.readLine())!=null){
@@ -67,12 +82,16 @@ public class decoder {
 			String[] words = S.split(" ");
 			//System.out.println(words[0] + " "+ words[1]);
 			code_table[Integer.parseInt(words[0])] = words[1];
+			//System.out.println("code table : " +code_table[Integer.parseInt(words[0])]);
 			tree.insert(Integer.parseInt(words[0]),words[1]);
 		}
 		br.close();
 		//System.out.println(args[0]+" "+args[1]);
 		decodeText(tree, args[0]);
 		
+		long stopTime = System.currentTimeMillis();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("Time for decoding: "+elapsedTime +" avg time :"+(double) elapsedTime/10);
 		
 	}
 }

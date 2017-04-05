@@ -21,28 +21,28 @@ public class encoder {
 
 		int len=0, tmp=0;
 		String S=new String();
+		StringBuilder sb = new StringBuilder();
 		while((S=input.readLine())!=null){
 			int s = Integer.parseInt(S);
-			for(int i=0; i<code_table[s].length(); i++){
-				if (code_table[s].charAt(i) == '1'){
-					tmp += (1 << len);
-				}
-				len++;
-				if (len == 8){
-					out.write(tmp);
-					len = 0;
-					tmp = 0;
-				}
-			}
+			//System.out.println("code_table[s] : " +code_table[s]);
+			sb.append(code_table[s]);
 		}
-
+		for(int i = 0;i<sb.length();i=i+8){
+			String codeString = sb.substring(i,i+8);
+			int code = Integer.parseInt(codeString,2);
+			out.write(code);
+			//System.out.println(code);
+		}
+		
 		input.close();
 		out.close();
 		System.out.println("encoded done");
+		
 		try (BufferedWriter table = new BufferedWriter(new FileWriter("code_table.txt"))) {
 			for(int i=0;i<FREQ_TABLE_SIZE ;i++){
 				if (code_table[i] != null){
 					table.write(i + " "+code_table[i]);
+					//System.out.println(i + " "+code_table[i]);
 					table.newLine();
 				}
 			}
@@ -60,6 +60,7 @@ public class encoder {
 		//	return;
 		//}
 
+		long startTime = System.currentTimeMillis();
 		FileReader fr=null;
 
 		//String path = "D:\\sample_input_large.txt";
@@ -81,6 +82,8 @@ public class encoder {
 		tree.traverse(tree.getRoot(), ch, 0,code_table);
 			
 		encodeText(args[0]);
-
+		long stopTime = System.currentTimeMillis();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("Time for encoding: "+elapsedTime +" avg time :"+(double) elapsedTime/10);
 	}
 }

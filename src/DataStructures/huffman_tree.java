@@ -55,18 +55,22 @@ public class huffman_tree{
 			return;
 		for(int i=0;i<s.length();i++){
 			if (s.charAt(i) == '0'){
+				//System.out.print("0");
 				if (node.left == null){
 					node.left = new huffman_tree_node();
 				}
 				node = node.left;
 			}
 			else{
+				//System.out.print("1");
 				if (node.right == null){
 					node.right = new huffman_tree_node();
 				}
 				node = node.right;
 			}
 		}
+		//System.out.print(" key: " +key);
+		//System.out.println("");	
 		node.val = key;
 	}
 }
