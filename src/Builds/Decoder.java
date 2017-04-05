@@ -10,7 +10,7 @@ import java.io.IOException;
 import DataStructures.huffman_tree;
 import DataStructures.huffman_tree_node;
 
-public class Decoder {
+public class decoder {
 	public static final String[] code_table = new String[1000000];
 	
 	static void decodeText(huffman_tree tree, String filename) throws IOException{
@@ -24,9 +24,12 @@ public class Decoder {
 	    	buffer.append(S);
 	    }
 	    
+		input.close();
+		
 	    String data = new String();
 	    data = buffer.toString();
-	    
+	    //System.out.println(out);
+	    //System.out.println(data);
 		huffman_tree_node node = tree.getRoot();
 
 		for (int i=0;i<data.length(); i++) {
@@ -37,13 +40,13 @@ public class Decoder {
 				else
 					node = node.left;
 				if (node.left == null && node.right == null){
-					out.write(node.val);
-					out.newLine();
+					//System.out.println(node.val);
+					out.write(Integer.toString(node.val));
+					out.write("\n");
 					node = tree.getRoot();
 				}
 			}
 		}
-		input.close();
 		out.close();
 		System.out.println("decoded.txt done");
 	}
@@ -55,19 +58,20 @@ public class Decoder {
 		//System.out.println(args[0]+" "+args[1]);
 		
 		FileReader fr=null;
-		fr=new FileReader(args[0]);
+		fr=new FileReader(args[1]);
 		
 		BufferedReader br=new BufferedReader(fr);
 		String S=new String();
 		while((S=br.readLine())!=null){
+			//System.out.println(S);
 			String[] words = S.split(" ");
-			//System.out.println(words);
+			//System.out.println(words[0] + " "+ words[1]);
 			code_table[Integer.parseInt(words[0])] = words[1];
 			tree.insert(Integer.parseInt(words[0]),words[1]);
 		}
 		br.close();
 		//System.out.println(args[0]+" "+args[1]);
-		decodeText(tree, args[1]);
+		decodeText(tree, args[0]);
 		
 		
 	}

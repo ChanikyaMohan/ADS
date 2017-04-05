@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import DataStructures.huffman_tree;
 
-public class Encoder {
+public class encoder {
 	public static final int FREQ_TABLE_SIZE  = 1000000;
 	public static final int[] freq_table = new int[1000000]; 
 	public static final String[] code_table = new String[1000000];
