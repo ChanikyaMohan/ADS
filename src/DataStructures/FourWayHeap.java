@@ -19,8 +19,7 @@ public class FourWayHeap {
 		arr.add(newElem);
 		int idx = arr.size() - 1;
 		while(idx > 3){
-			if (arr.get(idx).freq < arr.get(idx/4+2).freq || 
-				(arr.get(idx).freq == arr.get(idx/4+2).freq && arr.get(idx/4+2).tree.size() > arr.get(idx).tree.size())){
+			if (arr.get(idx).freq < arr.get(idx/4+2).freq ){
 				Collections.swap(arr,idx, idx/4+2);
 				idx = idx/4 + 2;
 			}
@@ -39,14 +38,12 @@ public class FourWayHeap {
 		while(minChild < arr.size()){
 			int tmp=minChild;
 			for(int i=1;i<4 && minChild+i<arr.size();i++){
-				if (arr.get(tmp).freq > arr.get(minChild+i).freq || 
-					(arr.get(tmp).freq == arr.get(minChild+i).freq && arr.get(tmp).tree.size() > arr.get(minChild+i).tree.size()) )
+				if (arr.get(tmp).freq > arr.get(minChild+i).freq )
 					tmp = minChild + i;
 			}
 			minChild = tmp;
 			
-			if (arr.get(idx).freq > arr.get(minChild).freq || 
-					(arr.get(idx).freq == arr.get(minChild).freq && arr.get(idx).tree.size() > arr.get(minChild).tree.size())){
+			if (arr.get(idx).freq > arr.get(minChild).freq ){
 				Collections.swap(arr,idx, minChild);
 				idx = minChild;
 				minChild = 4*(idx - 2);
